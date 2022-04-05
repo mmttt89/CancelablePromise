@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import cancelablePromise from "../../lib/cancelablePromise";
+import cancelablePromise from "../cancelablePromise";
+
+//simple example when your component get mounted and you want to fetch data 
+// in useEffect
 
 const FetchDataWithCancelablePromise = () => {
-    const [todos, setTodos] = useState([])
+    const [todos, setTodos] = useState([]);
 
     useEffect(() => {
         const todosPromise = fetch('https://jsonplaceholder.typicode.com/todos')
-
         const cancelable = cancelablePromise(todosPromise);
+
         cancelable.promise
             .then(result => result.json())
             .then(todosData => setTodos(todosData))
@@ -20,28 +23,28 @@ const FetchDataWithCancelablePromise = () => {
     }, [])
 
     return (
-        <div>
+        <section>
             <h4>
-                With Cancelable Promise
+                With Cancelable Promise on initial load data
             </h4>
-            <p>
-                to see the effect click on fetch data and then go to
 
-                <button>Get Data</button>
-
-                <Link to={"/next-page"}>
-                    <strong>next page</strong>
+            <div>
+                <button onClick={_loadData}>Get Data</button>
+                <br />
+                <Link to={"/"}>
+                    <strong>Home</strong>
                 </Link>
-            </p>
-            
+            </div>
+
             <h4>Todos {todos.length}</h4>
+
             {
                 todos.map((item, index) => {
                     <div key={index.toString()}>{item?.id}</div>
                 })
             }
 
-        </div>
+        </section>
     )
 }
 
