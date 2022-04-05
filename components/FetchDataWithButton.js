@@ -36,7 +36,7 @@ const FetchDataWithButton = () => {
     return (
         <div>
             <h4>
-                With Cancelable Promise
+                With Cancelable Promise and button click
             </h4>
 
             <div className='row'>
