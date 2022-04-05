@@ -1,34 +1,32 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import cancelablePromise from "../cancelablePromise";
 
-//simple example when your component get mounted and you want to fetch data 
+//another example to get data and cancel it with abort controller
 // in useEffect
 
-const FetchDataWithCancelablePromise = () => {
+const FetchDataWithAbortController = () => {
     const [todos, setTodos] = useState([]);
-
+  
     useEffect(() => {
-        const todosPromise = fetch('https://jsonplaceholder.typicode.com/todos')
-        const cancelable = cancelablePromise(todosPromise);
+        let abortController = new AbortController();
 
-        cancelable.promise
+        fetch('https://jsonplaceholder.typicode.com/todos', { signal: abortController.signal })
             .then(result => result.json())
-            .then(todosData => setTodos(todosData))
-            .catch(({ isCanceled, ...error }) => console.log('isCanceled', isCanceled));
+            .then(todos => setTodos(todos))
+            .catch(err => console.log("error"))
 
         return () => {
-            cancelable.cancel()
+            abortController.abort()
         }
     }, [])
 
     return (
         <section>
             <h4>
-                With Cancelable Promise on initial load data
+                With AbortController on initial load data
             </h4>
 
-            <div>             
+            <div>                
                 <Link to={"/"}>
                     <strong>Home</strong>
                 </Link>
@@ -46,4 +44,4 @@ const FetchDataWithCancelablePromise = () => {
     )
 }
 
-export default FetchDataWithCancelablePromise
+export default FetchDataWithAbortController

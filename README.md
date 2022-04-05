@@ -10,7 +10,9 @@ This is a simple fix for common problem in projects with react and react native 
 
 To solve this issue we use cancelable promise wrapper.
 
+I also added abortController and ismount anti pattern, you can use them as well but
+cancelable promise is a better choice. 
+
+p.s: if you find any problem feel free to open an issue.
+
 ##### Enjoy #####
-
-
-p.s: you can also use "AbortController", i will add it soon
